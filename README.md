@@ -1,1 +1,1 @@
-# GeVmini
+# GeVmini -  For Developers
