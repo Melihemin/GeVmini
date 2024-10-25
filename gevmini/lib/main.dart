@@ -1,8 +1,129 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MetarialApp(
+    initialRoute : '/',
+    routes:{
+      '/': (context) => const MainPage(), // Main Page (User Name & SignIn Button)
+      '/second' : (context) => const QuestionPage(), // Initialising QuestionPage
+      '/third' : (context) => const LeaderBoard(), // Initialising LeaderBoard Page
+    },
+  ));
 }
+
+class MainPage extends StatelessWidget{
+  const MainPage({Key? key}) : super(key: key);
+
+  Widget build(BuildContext context){
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: Color(0xFF495057), // Background color
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Heading
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 14, horizontal: 80),
+                  alignment: Alignment.topCenter,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF3A6EA5),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Text(
+                    'geVmini',
+                    style: TextStyle(
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'JetBrainsMono', // Heading Font
+                      color: Colors.white,
+                      
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                SizedBox(height: 50), // Some space between containers
+
+                // TextField
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(25),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 10,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'İsminizi Girin...',
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 40), // Some space between containers
+
+                // SignIn Button
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF3A6EA5), // Button color
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 40),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                  ),
+                  onPressed: () {
+                    // Button on click fun
+                  },
+                  child: Text(
+                    'Giriş',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 40), // Some space between buttons
+                
+                // user manual button
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF495057), // Buton color
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 40),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    elevation: 0,
+                  ),
+                  onPressed: () {
+                    // user manual on click fun
+                  },
+                  child: Text(
+                    'Kullanım Kılavuzu',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: const Color(0xFF8C8686),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -11,23 +132,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'GeVmini',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
+        
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
