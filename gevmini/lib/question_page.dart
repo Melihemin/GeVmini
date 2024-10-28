@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:native_dialog_plus/native_dialog_plus.dart';
 import 'global.dart'; //dart file it keeps username
 
 //void main() => runApp(MyApp());
@@ -179,11 +180,28 @@ class _QuestionPageState extends State<QuestionPage> {
               padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
             ),
             onPressed: () {
-              setState(() {
-                isExplanationVisible = !isExplanationVisible;
-              });
-              
-            },
+              NativeDialogPlus(
+                actions: [
+                NativeDialogPlusAction(
+                        text: 'Kapat',
+                        style: NativeDialogPlusActionStyle.defaultStyle,
+                    ),
+                ],
+                title: 'İşte Sorunun Açıklaması :',
+                message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
+                          'qui officia deserunt mollit anim id est laborum.'
+                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
+                          'qui officia deserunt mollit anim id est laborum.'
+                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
+                          'qui officia deserunt mollit anim id est laborum.'
+                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
+                          'qui officia deserunt mollit anim id est laborum.'
+                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
+                          'qui officia deserunt mollit anim id est laborum.'
+                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
+                          'qui officia deserunt mollit anim id est laborum.'
+                  ).show();
+                },
             child: Text(
               'Soruyu Açıkla',
               style: TextStyle(color: Colors.white),

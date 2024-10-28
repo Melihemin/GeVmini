@@ -75,6 +75,11 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_web_plugins:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   leak_tracker:
     dependency: transitive
     description:
@@ -131,6 +136,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.15.0"
+  native_dialog_plus:
+    dependency: "direct main"
+    description:
+      name: native_dialog_plus
+      sha256: bdf63a927236d4ae1aef1220c8cbc52f399b7e2b38f4ed9aa5bb43fd4dd7d88d
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.7"
   path:
     dependency: transitive
     description:
