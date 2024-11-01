@@ -87,9 +87,9 @@ class _MainPageState extends State<MainPage> {
                 ),
               ),
               SizedBox(height: 40),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF3A6EA5),
+              OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: Color(0xFFFFFCF2)),
                   padding: EdgeInsets.symmetric(vertical: 12, horizontal: 40),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25),

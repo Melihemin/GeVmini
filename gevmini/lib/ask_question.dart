@@ -15,20 +15,19 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
   bool isExplanationVisible = false;
   bool showAdditionalButtons = false;
   final TextEditingController _textController1 = TextEditingController(); // First textController
-  final TextEditingController _textController2 = TextEditingController(); // Second textController
   String result = ''; // Result text
+  String? _selectedDifficulty; // Değişkeni tanımladık
   
   @override
   void dispose() {
     _textController1.dispose();
-    _textController2.dispose();
     super.dispose();
   }
 
   void _calculateResult() {
     setState(() {
       // Combining input from two text fields as an example result
-      result = 'Birinci Girdi: ${_textController1.text}\nİkinci Girdi: ${_textController2.text}';
+      //result = 'Birinci Girdi: ${_textController1.text}\nİkinci Girdi: ${_textController2.text}';
     });
   }
 
@@ -105,25 +104,33 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: Color(0xFFFFFCF2)),
               ),
-              child: TextField(
-                controller: _textController2,
-                style: TextStyle(color: Colors.black),
+              child: DropdownButtonFormField<String>(
+                value: _selectedDifficulty,
+                items: ['Çırak', 'Orta Seviye', 'İleri Seviye', 'Uzman', 'Usta'].map((e) => DropdownMenuItem<String>(
+                  value: e,
+                  child: Text(e),
+                )).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _selectedDifficulty = value;
+                  });
+                },
                 decoration: InputDecoration(
-                  hintText: 'Hangi Düzeyde Anlatım İstersiniz...',
-                  hintStyle: TextStyle(color: Colors.grey),
+                  labelText: 'Soruların zorluk seviyesi nasıl olsun ?',
+                  labelStyle: TextStyle(color: Colors.grey),
                   border: InputBorder.none,
                 ),
               ),
             ),
 
             // Submit Button
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF3A6EA5),
+            OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: Color(0xFFFFFCF2)),
                 padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
               ),
               onPressed: () {
-                if (_textController1.text.trim().isEmpty || _textController2.text.trim().isEmpty) {
+                if (_textController1.text.trim().isEmpty || _selectedDifficulty == null) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Lütfen her iki alanı da doldurun')),
                   );

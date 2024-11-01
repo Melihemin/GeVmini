@@ -117,9 +117,9 @@ class _MotivationPageState extends State<MotivationPage> {
             ),
 
             // Submit Button
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF3A6EA5),
+            OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: Color(0xFFFFFCF2)),
                 padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
               ),
               onPressed: () {

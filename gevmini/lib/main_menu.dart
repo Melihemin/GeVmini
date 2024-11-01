@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gevmini/ask_question.dart';
+import 'package:gevmini/profile_page.dart';
 import 'package:gevmini/question_page.dart';
 import 'package:gevmini/motivate_page.dart';
 
@@ -14,10 +15,10 @@ class _MainMenuPageState extends State<MainMenuPage> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
+    ProfilePage(),
     QuestionPage(),
-    MotivationPage(),
     AskQuestionPage(),
-    Center(child: Text('Profil Sayfası', style: TextStyle(fontSize: 24))),
+    MotivationPage(),
   ];
 
   void _onTabTapped(int index) {
@@ -38,22 +39,21 @@ class _MainMenuPageState extends State<MainMenuPage> {
         unselectedItemColor: Colors.grey,
         items: [
           BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profil',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.create),
             label: 'Soru Oluştur',
             tooltip: 'Soru Oluştur',
-            
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.self_improvement),
-            label: 'Motivasyon',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.question_answer),
             label: 'Soru Sor',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profil',
+            icon: Image(image: AssetImage('assets/images/gevrek.png'), fit: BoxFit.cover, width: 30, height: 30),
+            label: 'geVmini',
           ),
         ],
       ),

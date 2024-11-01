@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gevmini/functions.dart';
 import 'package:native_dialog_plus/native_dialog_plus.dart';
 import 'global.dart'; //dart file it keeps username
 
@@ -14,8 +15,11 @@ const QuestionPage({Key? key}) : super(key: key);
 class _QuestionPageState extends State<QuestionPage> {
   bool isExplanationVisible = false;
   bool showAdditionalButtons = false;
-  final TextEditingController _textController = TextEditingController(); // textController
-  
+  final TextEditingController _textController = TextEditingController(); // textController;
+  int? _selectedQuestionCount; // Değişkeni tanımladık
+  String? _selectedDifficulty; // Değişkeni tanımladık
+
+
   @override
   void dispose() {
     _textController.dispose(); // clear Controller
@@ -68,45 +72,8 @@ class _QuestionPageState extends State<QuestionPage> {
         ),
         SizedBox(height: 20),
 
-        // Question Area
         Container(
-            padding: EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.grey[700],
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
-              'qui officia deserunt mollit anim id est laborum.'
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
-              'qui officia deserunt mollit anim id est laborum.'
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
-              'qui officia deserunt mollit anim id est laborum.'
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
-              'qui officia deserunt mollit anim id est laborum.'
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
-              'qui officia deserunt mollit anim id est laborum.'
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
-              'qui officia deserunt mollit anim id est laborum.'
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
-              'qui officia deserunt mollit anim id est laborum.'
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
-              'qui officia deserunt mollit anim id est laborum.'
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
-              'qui officia deserunt mollit anim id est laborum.'
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
-              'qui officia deserunt mollit anim id est laborum.',
-              style: TextStyle(
-                color: Colors.white, 
-                fontFamily: 'PlayfairDisplay', 
-                fontSize: 16
-                ),
-            ),
-          ),
-        SizedBox(height: 10),
-
-        Container(
-              margin: EdgeInsets.symmetric(vertical: 20),
+              margin: EdgeInsets.symmetric(vertical: 10),
               padding: EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -117,8 +84,62 @@ class _QuestionPageState extends State<QuestionPage> {
                 controller: _textController,
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
-                  hintText: 'Cevabınızı buraya yazın...',
+                  hintText: 'Hangi konuda soru oluşturmak istersiniz ?',
                   hintStyle: TextStyle(color: Colors.grey),
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Color(0xFFFFFCF2)),
+              ),
+              child: DropdownButtonFormField<int>(
+                value: _selectedQuestionCount,
+                items: List.generate(5, (index) => index + 1).map((e) => DropdownMenuItem<int>(
+                  value: e,
+                  child: Text(e.toString()),
+                )).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _selectedQuestionCount = value;
+                  });
+                },
+                decoration: InputDecoration(
+                  labelText: 'Kaç adet soru oluşturmalıyım ?',
+                  labelStyle: TextStyle(color: Colors.grey),
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Color(0xFFFFFCF2)),
+              ),
+              child: DropdownButtonFormField<String>(
+                value: _selectedDifficulty,
+                items: ['Kolay', 'Orta', 'Zor', 'İleri'].map((e) => DropdownMenuItem<String>(
+                  value: e,
+                  child: Text(e),
+                )).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _selectedDifficulty = value;
+                  });
+                },
+                decoration: InputDecoration(
+                  labelText: 'Soruların zorluk seviyesi nasıl olsun ?',
+                  labelStyle: TextStyle(color: Colors.grey),
                   border: InputBorder.none,
                 ),
               ),
@@ -132,77 +153,32 @@ class _QuestionPageState extends State<QuestionPage> {
         OutlinedButton(
           style: OutlinedButton.styleFrom(
             side: BorderSide(color: Color(0xFFFFFCF2)),
-            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           ),
           onPressed: () { //onclick method
-            if (_textController.text.trim().isEmpty) { //toast message and other buttons visibility
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Lütfen bir cevap girin ${userName}')),
-              );
-            } else {
-              setState(() {
-                showAdditionalButtons = true;
-              });
-            }
-          },
-          child: Text(
-            'Kontrol Et',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
+            if (_textController.text.trim().isEmpty || _selectedQuestionCount == null || _selectedDifficulty == null) { //toast message and other buttons visibility
 
-        if (showAdditionalButtons) ...[  // visibility
-          //space between buttons
-          SizedBox(width: 5),
-          //Explain question button
-          OutlinedButton(
-            style: OutlinedButton.styleFrom(
-              side: BorderSide(color: Color(0xFFFFFCF2)),
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-            ),
-            onPressed: () {
-              NativeDialogPlus(
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Lütfen tüm alanları doldurun ${userName}')),
+              );
+            }else{
+            NativeDialogPlus(
                 actions: [
                 NativeDialogPlusAction(
                         text: 'Kapat',
                         style: NativeDialogPlusActionStyle.defaultStyle,
                     ),
                 ],
-                title: 'İşte Sorunun Açıklaması :',
-                message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
-                          'qui officia deserunt mollit anim id est laborum.'
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
-                          'qui officia deserunt mollit anim id est laborum.'
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
-                          'qui officia deserunt mollit anim id est laborum.'
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
-                          'qui officia deserunt mollit anim id est laborum.'
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
-                          'qui officia deserunt mollit anim id est laborum.'
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, '
-                          'qui officia deserunt mollit anim id est laborum.'
+                title: 'İşte Oluşturmamı İstediğin Sorular :',
+                //message: AidaFunctions(model).createQuiz(_textController.text, _selectedQuestionCount, _selectedDifficulty); //Attach a model in Class parameter
                   ).show();
-                },
-            child: Text(
-              'Soruyu Açıkla',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-          //space between buttons
-          SizedBox(width: 5),
-          //next quesetion button
-          IconButton(
-            icon: Icon(Icons.arrow_forward),
-            color: Color(0xFFFFFCF2),
-            onPressed: () {
-              // //onclick method
-            setState(() {
-              showAdditionalButtons = false;
-              isExplanationVisible = false;
-            });
+                }
           },
+          child: Text(
+            'Soruları Oluştur',
+            style: TextStyle(color: Colors.white),
           ),
-        ],
+        ),
       ],
     ),
     SizedBox(height: 20),
