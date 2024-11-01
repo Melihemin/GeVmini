@@ -2,25 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:native_dialog_plus/native_dialog_plus.dart';
 import 'global.dart'; //dart file it keeps username
 
-//void main() => runApp(MyApp());
-//
-//class MyApp extends StatelessWidget {
-//  
-//  @override
-//  Widget build(BuildContext context) {
-//    return MaterialApp(
-//      home: Scaffold(
-//        backgroundColor: Color(0xFF004E98), // Ana arka plan rengi
-//        body: Center(
-//          child: Padding(
-//            padding: const EdgeInsets.all(16.0),
-//            child: CustomScreen(),
-//          ),
-//        ),
-//      ),
-//    );
-//  }
-//}
 
 class QuestionPage extends StatefulWidget {
 
@@ -219,7 +200,7 @@ class _QuestionPageState extends State<QuestionPage> {
               showAdditionalButtons = false;
               isExplanationVisible = false;
             });
-            },
+          },
           ),
         ],
       ],
