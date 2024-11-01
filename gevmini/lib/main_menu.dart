@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gevmini/ask_question.dart';
 import 'package:gevmini/profile_page.dart';
 import 'package:gevmini/question_page.dart';
-import 'package:gevmini/motivate_page.dart';
+import 'package:gevmini/chatbot_page.dart';
 
 class MainMenuPage extends StatefulWidget {
   const MainMenuPage({Key? key}) : super(key: key);
@@ -18,7 +18,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
     ProfilePage(),
     QuestionPage(),
     AskQuestionPage(),
-    MotivationPage(),
+    ChatBotPage(),
   ];
 
   void _onTabTapped(int index) {
