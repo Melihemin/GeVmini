@@ -106,6 +106,7 @@ class _QuestionPageState extends State<QuestionPage> {
 
             // First TextField for Question Context
             Container(
+              width: MediaQuery.of(context).size.width * 0.8,
               margin: EdgeInsets.symmetric(vertical: 10),
               padding: EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
@@ -126,6 +127,7 @@ class _QuestionPageState extends State<QuestionPage> {
 
             // Second TextField for Topic
             Container(
+              width: MediaQuery.of(context).size.width * 0.8,
               margin: EdgeInsets.symmetric(vertical: 10),
               padding: EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
@@ -146,6 +148,7 @@ class _QuestionPageState extends State<QuestionPage> {
 
             // Difficulty Level Dropdown
             Container(
+              width: MediaQuery.of(context).size.width * 0.8,
               margin: EdgeInsets.symmetric(vertical: 10),
               padding: EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
@@ -190,6 +193,7 @@ class _QuestionPageState extends State<QuestionPage> {
             // Result Display Area
             if (isExplanationVisible)
               Container(
+                width: MediaQuery.of(context).size.width * 0.8,
                 margin: EdgeInsets.symmetric(vertical: 20),
                 padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(

@@ -101,6 +101,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
 
             // First TextField for Question Context
             Container(
+              width: MediaQuery.of(context).size.width * 0.8,
               margin: EdgeInsets.symmetric(vertical: 10),
               padding: EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
@@ -121,6 +122,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
 
             // Second TextField for Topic
             Container(
+              width: MediaQuery.of(context).size.width * 0.8,
               margin: EdgeInsets.symmetric(vertical: 10),
               padding: EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
@@ -141,6 +143,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
 
             // Difficulty Level Dropdown
             Container(
+              width: MediaQuery.of(context).size.width * 0.8,
               margin: EdgeInsets.symmetric(vertical: 10),
               padding: EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
@@ -185,6 +188,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
             // Result Display Area
             if (isExplanationVisible)
               Container(
+                width: MediaQuery.of(context).size.width * 0.8,
                 margin: EdgeInsets.symmetric(vertical: 20),
                 padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(

@@ -121,6 +121,7 @@ class _LecturePageState extends State<LecturePage> {
 
   Widget _buildTextField({required TextEditingController controller, required String hint}) {
     return Container(
+      width: MediaQuery.of(context).size.width * 0.8,
       margin: EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
@@ -142,6 +143,7 @@ class _LecturePageState extends State<LecturePage> {
 
   Widget _buildDropdown() {
     return Container(
+      width: MediaQuery.of(context).size.width * 0.8,
       margin: EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
@@ -199,6 +201,7 @@ class _LecturePageState extends State<LecturePage> {
 
   Widget _buildResultDisplay() {
     return Container(
+      width: MediaQuery.of(context).size.width * 0.8,
       margin: EdgeInsets.symmetric(vertical: 20),
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
