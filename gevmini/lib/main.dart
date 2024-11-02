@@ -113,27 +113,6 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 40),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF495057),
-                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 40),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  elevation: 0,
-                ),
-                onPressed: () {
-                  // Kullanım Kılavuzu sayfasına yönlendirme yapılabilir
-                },
-                child: Text(
-                  'Kullanım Kılavuzu',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: const Color(0xFF8C8686),
-                  ),
-                ),
-              ),
             ],
           ),
         ),

@@ -26,11 +26,10 @@ class _ChatBotPageState extends State<ChatBotPage> {
   // Function to add user message and get guide response
   Future<void> _addMessage() async {
     String subject = _messageController.text.trim();
-    String? feel = await _showFeelDialog(); // Get "feel" through a dialog
 
-    if (subject.isNotEmpty && feel != null) {
+    if (subject.isNotEmpty) {
       setState(() {
-        messages.add(ChatBubble(text: "Subject: $subject, Feel: $feel", isUserMessage: true));
+        messages.add(ChatBubble(text: subject, isUserMessage: true));
       });
 
       // Clear the message input
@@ -38,7 +37,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
 
       // Get guide response from ApiService
       try {
-        final guideResponse = await apiService.guide(subject, feel);
+        final guideResponse = await apiService.guide(subject); // Pass empty string for feel
         setState(() {
           messages.add(ChatBubble(
             text: guideResponse ?? 'Üzgünüm, bu konuda yardımcı olamıyorum.',
@@ -54,48 +53,6 @@ class _ChatBotPageState extends State<ChatBotPage> {
         });
       }
     }
-  }
-
-  // Show dialog to capture "feel" input from the user using a dropdown
-  Future<String?> _showFeelDialog() async {
-    String? selectedFeel;
-
-    return await showDialog<String>(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text("Feel", style: TextStyle(color: Colors.blue)),
-          content: DropdownButton<String>(
-            value: selectedFeel,
-            hint: Text("Select how you feel...", style: TextStyle(color: Colors.blueGrey)),
-            items: <String>[
-              'Happy',
-              'Sad',
-              'Confused',
-              'Excited',
-              'Frustrated',
-              'Neutral'
-            ].map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value, style: TextStyle(color: Colors.black)),
-              );
-            }).toList(),
-            onChanged: (value) {
-              setState(() {
-                selectedFeel = value;
-              });
-            },
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(selectedFeel),
-              child: Text("Submit", style: TextStyle(color: Colors.blue)),
-            ),
-          ],
-        );
-      },
-    );
   }
 
   @override

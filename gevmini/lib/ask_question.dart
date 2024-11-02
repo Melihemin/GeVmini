@@ -25,35 +25,77 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
   }
 
   Future<void> _calculateResult() async {
-    // Validate input
-    if (_textController1.text.trim().isEmpty || _textController2.text.trim().isEmpty || _selectedDifficulty == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Lütfen tüm alanları doldurun')),
-      );
-      return;
-    }
+  // Validate input
+  if (_textController1.text.trim().isEmpty || _textController2.text.trim().isEmpty || _selectedDifficulty == null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Lütfen tüm alanları doldurun')),
+    );
+    return;
+  }
+
+  setState(() {
+    result = 'Yükleniyor...'; // Show loading indicator
+    isExplanationVisible = true;
+  });
+
+  try {
+    // Call the findAnswer method from ApiService
+    final apiResult = await apiService.findAnswer(
+      '${_textController1.text.trim()} - ${_textController2.text.trim()}',
+      _selectedDifficulty!,
+    );
 
     setState(() {
-      result = 'Yükleniyor...'; // Show loading indicator
-      isExplanationVisible = true;
+      result = apiResult ?? 'Bir cevap bulunamadı';
     });
 
-    try {
-      // Call the findAnswer method from ApiService
-      final apiResult = await apiService.findAnswer(
-        '${_textController1.text.trim()} - ${_textController2.text.trim()}',
-        _selectedDifficulty!,
-      );
+    // Show the result in a scrollable popup dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Sonuç"),
+          content: SingleChildScrollView(
+            child: Text(result),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Tamam"),
+            ),
+          ],
+        );
+      },
+    );
+  } catch (e) {
+    setState(() {
+      result = 'Bir hata oluştu: $e';
+    });
 
-      setState(() {
-        result = apiResult ?? 'Bir cevap bulunamadı';
-      });
-    } catch (e) {
-      setState(() {
-        result = 'Bir hata oluştu: $e';
-      });
-    }
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Hata"),
+          content: SingleChildScrollView(
+            child: Text(result),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Tamam"),
+            ),
+          ],
+        );
+      },
+    );
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -123,6 +165,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
             // Second TextField for Topic
             Container(
               width: MediaQuery.of(context).size.width * 0.8,
+              height: 200,
               margin: EdgeInsets.symmetric(vertical: 10),
               padding: EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
@@ -134,7 +177,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                 controller: _textController2,
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
-                  hintText: 'Hangi konu başlığında soru sormak istiyorsunuz?',
+                  hintText: 'Sormak istediğiniz soru nedir?',
                   hintStyle: TextStyle(color: Colors.grey),
                   border: InputBorder.none,
                 ),
@@ -171,7 +214,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                 ),
               ),
             ),
-
+            SizedBox(height : 40),
             // Submit Button
             OutlinedButton(
               style: OutlinedButton.styleFrom(
@@ -184,24 +227,6 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                 style: TextStyle(color: Colors.white),
               ),
             ),
-
-            // Result Display Area
-            if (isExplanationVisible)
-              Container(
-                width: MediaQuery.of(context).size.width * 0.8,
-                margin: EdgeInsets.symmetric(vertical: 20),
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.grey[800],
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: SingleChildScrollView(
-                  child: Text(
-                    result,
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                ),
-              ),
           ],
         ),
       ),

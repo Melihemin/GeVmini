@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gevmini/api.dart'; // Import ApiService
 import 'package:native_dialog_plus/native_dialog_plus.dart';
-import 'global.dart'; // dart file that keeps username
+import 'global.dart'; // Dart file that keeps username
 
 class LecturePage extends StatefulWidget {
   const LecturePage({Key? key}) : super(key: key);
@@ -11,10 +11,8 @@ class LecturePage extends StatefulWidget {
 }
 
 class _LecturePageState extends State<LecturePage> {
-  bool isExplanationVisible = false;
   final TextEditingController _textController1 = TextEditingController();
   final TextEditingController _textController2 = TextEditingController();
-  String result = ''; // Result text
   String? _selectedDifficulty; // For difficulty level
   final ApiService apiService = ApiService(); // Initialize ApiService
 
@@ -26,11 +24,6 @@ class _LecturePageState extends State<LecturePage> {
   }
 
   Future<void> _calculateResult() async {
-    setState(() {
-      result = 'Yükleniyor...'; // Show loading indicator
-      isExplanationVisible = true;
-    });
-
     try {
       // Combine the field, topic, and difficulty to find the explanation
       final apiResult = await apiService.findAnswer(
@@ -38,14 +31,43 @@ class _LecturePageState extends State<LecturePage> {
         _selectedDifficulty!,
       );
 
-      setState(() {
-        result = apiResult ?? 'Bir açıklama bulunamadı';
-      });
+      // Show result in a popup
+      _showResultPopup(apiResult ?? 'Bir açıklama bulunamadı');
     } catch (e) {
-      setState(() {
-        result = 'Bir hata oluştu: $e';
-      });
+      _showResultPopup('Bir hata oluştu: $e');
     }
+  }
+
+  void _showResultPopup(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white, // Set background color to white
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          contentPadding: EdgeInsets.all(16),
+          content: SingleChildScrollView(
+            child: Text(
+              message,
+              style: TextStyle(color: Colors.black, fontSize: 16), // Set text color to black
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'Kapat',
+                style: TextStyle(color: Colors.black), // Set button text color to black
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -106,13 +128,9 @@ class _LecturePageState extends State<LecturePage> {
 
             // Difficulty Level Dropdown
             _buildDropdown(),
-
+            SizedBox(height: 40),
             // Submit Button
             _buildSubmitButton(),
-
-            // Result Display Area
-            if (isExplanationVisible)
-              _buildResultDisplay(),
           ],
         ),
       ),
@@ -195,24 +213,6 @@ class _LecturePageState extends State<LecturePage> {
       child: Text(
         'Konuyu Anlat',
         style: TextStyle(color: Colors.white),
-      ),
-    );
-  }
-
-  Widget _buildResultDisplay() {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.8,
-      margin: EdgeInsets.symmetric(vertical: 20),
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.grey[800],
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: SingleChildScrollView(
-        child: Text(
-          result,
-          style: TextStyle(color: Colors.white, fontSize: 16),
-        ),
       ),
     );
   }

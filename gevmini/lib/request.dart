@@ -36,10 +36,9 @@ class AidaFunctions {
   }
 
   /// Provides a guide for a given subject and emotional state.
-  Future<String> guide(String subject, String feel) async {
+  Future<String> guide(String subject) async {
     return await _postRequest({
       "subject": subject,
-      "feel": feel,
       "type": "guide"
     });
   }

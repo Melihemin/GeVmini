@@ -43,7 +43,7 @@ class ApiService {
   }
 
   // Quiz oluşturma
-  Future<String?> createQuiz(String subject, int questionCount, String level) async {
+  Future<String?> createQuiz(String subject, int questionCount, int level) async {
     final response = await http.post(
       Uri.parse('$baseUrl/create_quiz'),
       headers: {'Content-Type': 'application/json'},
@@ -84,26 +84,27 @@ class ApiService {
   }
 
   // Rehberlik sağlama
-  Future<String?> guide(String subject, String feel) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/guide'),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'subject': subject,
-        'feel': feel,
-      }),
-    );
+  // Rehberlik sağlama
+Future<String?> guide(String subject) async {
+  final response = await http.post(
+    Uri.parse('$baseUrl/guide'),
+    headers: {'Content-Type': 'application/json'},
+    body: json.encode({
+      'subject': subject, // Only passing the subject
+    }),
+  );
 
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      return data['result'];
-    } else {
-      throw Exception('Failed to get guidance');
-    }
+  if (response.statusCode == 200) {
+    final data = json.decode(response.body);
+    return data['result'];
+  } else {
+    throw Exception('Failed to get guidance');
   }
+}
+
 
   // Soru oluşturma
-  Future<String?> createQuestion(String subject, String level) async {
+  Future<String?> createQuestion(String subject, int level) async {
     final response = await http.post(
       Uri.parse('$baseUrl/create_question'),
       headers: {'Content-Type': 'application/json'},
