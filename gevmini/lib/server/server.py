@@ -69,9 +69,8 @@ def find_answer():
 def guide():
     data = request.get_json()
     subject = data.get("subject")
-    feel = data.get("feel")
-    if subject and feel:
-        result = gevmini.guide(subject, feel)
+    if subject:
+        result = gevmini.guide(subject)
         return jsonify({"result": result}), 200
     else:
         return jsonify({"error": "Invalid input data"}), 400

@@ -5,7 +5,8 @@ class ApiService {
   final String baseUrl = 'http://127.0.0.1:5000/api';
 
   // API'den cevap yüzdesini almak için
-  Future<double?> answersPercent(String userAnswer, String correctAnswer) async {
+  Future<double?> answersPercent(
+      String userAnswer, String correctAnswer) async {
     final response = await http.post(
       Uri.parse('$baseUrl/answers_percent'),
       headers: {'Content-Type': 'application/json'},
@@ -43,7 +44,8 @@ class ApiService {
   }
 
   // Quiz oluşturma
-  Future<String?> createQuiz(String subject, int questionCount, int level) async {
+  Future<String?> createQuiz(
+      String subject, int questionCount, int level) async {
     final response = await http.post(
       Uri.parse('$baseUrl/create_quiz'),
       headers: {'Content-Type': 'application/json'},
@@ -63,7 +65,8 @@ class ApiService {
   }
 
   // Ders oluşturma
-  Future<String?> lecture(String subject, String title, String level, String token) async {
+  Future<String?> lecture(
+      String subject, String title, String level, String token) async {
     final response = await http.post(
       Uri.parse('$baseUrl/lecture'),
       headers: {'Content-Type': 'application/json'},
@@ -84,24 +87,24 @@ class ApiService {
   }
 
   // Rehberlik sağlama
-  // Rehberlik sağlama
-Future<String?> guide(String subject) async {
-  final response = await http.post(
-    Uri.parse('$baseUrl/guide'),
-    headers: {'Content-Type': 'application/json'},
-    body: json.encode({
-      'subject': subject, // Only passing the subject
-    }),
-  );
+  Future<String?> guide(String subject) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/guide'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({
+        'subject': subject, // Sadece subject parametresini gönderiyoruz
+      }),
+    );
 
-  if (response.statusCode == 200) {
-    final data = json.decode(response.body);
-    return data['result'];
-  } else {
-    throw Exception('Failed to get guidance');
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return data['result'];
+    } else {
+      // Hata ayıklama için yanıt gövdesini yazdırıyoruz
+      print('Guide error: ${response.statusCode} - ${response.body}');
+      throw Exception('Failed to get guidance');
+    }
   }
-}
-
 
   // Soru oluşturma
   Future<String?> createQuestion(String subject, int level) async {
