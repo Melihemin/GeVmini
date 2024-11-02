@@ -30,7 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^0.13.3
+  http: ^1.1.0  # En son sürümü kullanabilirsiniz
+  flutter_markdown: ^0.6.18
 
 
 

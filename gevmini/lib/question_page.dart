@@ -25,7 +25,9 @@ class _QuestionPageState extends State<QuestionPage> {
 
   Future<void> _createQuiz() async {
     // Input validation
-    if (_textController1.text.trim().isEmpty || _selectedOption == null || _selectedDifficulty == null) {
+    if (_textController1.text.trim().isEmpty ||
+        _selectedOption == null ||
+        _selectedDifficulty == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Lütfen tüm alanları doldurun')),
       );
@@ -51,7 +53,8 @@ class _QuestionPageState extends State<QuestionPage> {
                       : 5;
 
       // Send quiz creation request via ApiService
-      final response = await apiService.createQuiz(subject, questionCount, level);
+      final response =
+          await apiService.createQuiz(subject, questionCount, level);
 
       setState(() {
         result = response != null && response.isNotEmpty
@@ -61,7 +64,6 @@ class _QuestionPageState extends State<QuestionPage> {
 
       // Display result in a popup
       _showResultPopup(result);
-
     } catch (e) {
       setState(() {
         result = 'Bir hata oluştu: $e';
@@ -71,37 +73,38 @@ class _QuestionPageState extends State<QuestionPage> {
   }
 
   void _showResultPopup(String message) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        backgroundColor: Colors.white, // Set background color to white
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        contentPadding: EdgeInsets.all(16),
-        content: SingleChildScrollView(
-          child: Text(
-            message,
-            style: TextStyle(color: Colors.black, fontSize: 16), // Set text color to black
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white, // Set background color to white
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
           ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+          contentPadding: EdgeInsets.all(16),
+          content: SingleChildScrollView(
             child: Text(
-              'Kapat',
-              style: TextStyle(color: Colors.black), // Set button text color to black
+              message,
+              style: TextStyle(
+                  color: Colors.black, fontSize: 16), // Set text color to black
             ),
           ),
-        ],
-      );
-    },
-  );
-}
-
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'Kapat',
+                style: TextStyle(
+                    color: Colors.black), // Set button text color to black
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +164,7 @@ class _QuestionPageState extends State<QuestionPage> {
                 controller: _textController1,
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
-                  hintText: 'Hangi alan için soru oluşturacaksınız?',
+                  hintText: 'Soru oluşturmak istediğiniz alan ve konu nedir?',
                   hintStyle: TextStyle(color: Colors.grey),
                   border: InputBorder.none,
                 ),
@@ -240,7 +243,7 @@ class _QuestionPageState extends State<QuestionPage> {
               ),
               onPressed: _createQuiz,
               child: Text(
-                'Sonucu Göster',
+                'Soru Oluştur',
                 style: TextStyle(color: Colors.white),
               ),
             ),

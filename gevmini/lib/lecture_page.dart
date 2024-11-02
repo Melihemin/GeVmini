@@ -51,7 +51,8 @@ class _LecturePageState extends State<LecturePage> {
           content: SingleChildScrollView(
             child: Text(
               message,
-              style: TextStyle(color: Colors.black, fontSize: 16), // Set text color to black
+              style: TextStyle(
+                  color: Colors.black, fontSize: 16), // Set text color to black
             ),
           ),
           actions: [
@@ -61,7 +62,8 @@ class _LecturePageState extends State<LecturePage> {
               },
               child: Text(
                 'Kapat',
-                style: TextStyle(color: Colors.black), // Set button text color to black
+                style: TextStyle(
+                    color: Colors.black), // Set button text color to black
               ),
             ),
           ],
@@ -137,7 +139,8 @@ class _LecturePageState extends State<LecturePage> {
     );
   }
 
-  Widget _buildTextField({required TextEditingController controller, required String hint}) {
+  Widget _buildTextField(
+      {required TextEditingController controller, required String hint}) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.8,
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -171,16 +174,12 @@ class _LecturePageState extends State<LecturePage> {
       ),
       child: DropdownButtonFormField<String>(
         value: _selectedDifficulty,
-        items: [
-          'Çırak',
-          'Orta Seviye',
-          'İleri Seviye',
-          'Uzman',
-          'Usta'
-        ].map((e) => DropdownMenuItem<String>(
-          value: e,
-          child: Text(e),
-        )).toList(),
+        items: ['Çırak', 'Orta Seviye', 'İleri Seviye', 'Uzman', 'Usta']
+            .map((e) => DropdownMenuItem<String>(
+                  value: e,
+                  child: Text(e),
+                ))
+            .toList(),
         onChanged: (value) {
           setState(() {
             _selectedDifficulty = value;
@@ -202,7 +201,9 @@ class _LecturePageState extends State<LecturePage> {
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       ),
       onPressed: () {
-        if (_textController1.text.trim().isEmpty || _textController2.text.trim().isEmpty || _selectedDifficulty == null) {
+        if (_textController1.text.trim().isEmpty ||
+            _textController2.text.trim().isEmpty ||
+            _selectedDifficulty == null) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Lütfen tüm alanları doldurun')),
           );
@@ -211,7 +212,7 @@ class _LecturePageState extends State<LecturePage> {
         }
       },
       child: Text(
-        'Konuyu Anlat',
+        'Konu Özetini Oluştur',
         style: TextStyle(color: Colors.white),
       ),
     );

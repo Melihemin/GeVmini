@@ -13,7 +13,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile', style: TextStyle(color: Colors.white)),
+        title: Text('Profil', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.blue,
       ),
       backgroundColor: Colors.grey[900],
@@ -23,13 +23,24 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              /*CircleAvatar(
+                radius: 50,
+                backgroundImage: AssetImage(
+                    'assets/images/pp.jpg'), // Replace with your profile picture
+              ),*/
               CircleAvatar(
                 radius: 50,
-                backgroundImage: AssetImage('assets/images/pp.jpg'), // Replace with your profile picture
+                backgroundColor: Colors.blue[800], // Arka plan rengi
+                child: Icon(
+                  Icons.person, // Profil ikonu
+                  size: 60, // İkon boyutu
+                  color: Colors.white, // İkon rengi
+                ),
               ),
               SizedBox(height: 10),
               Text(
-                'Welcome, $userName!',
+                //'Hoş Geldin, $userName!',
+                'Hoş Geldin $userName 👋',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -38,9 +49,9 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               SizedBox(height: 20),
               Text(
-                'This is your profile page.\n'
-                'Here you can find your personalized settings and features.\n'
-                'Explore the app to discover guides, chat with support, and more!',
+                'Bu, profil sayfanız.\n\n'
+                'Kişiselleştirilmiş ayarlarınıza ve özelliklerinize burada ulaşabilirsiniz.\n\n'
+                'Uygulamayı keşfederek rehberlere göz atın, destekle iletişime geçin ve çok daha fazlasını keşfedin!',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.white70,
@@ -52,7 +63,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 onPressed: () {
                   // Action for exploring guides
                 },
-                child: Text('Explore Guides'),
+                child: Text('Kullanım Rehberini Keşfet 🔍'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue, // Button color
                   foregroundColor: Colors.white, // Text color

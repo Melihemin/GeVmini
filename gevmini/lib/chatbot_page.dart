@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:native_dialog_plus/native_dialog_plus.dart';
 import 'global.dart'; // Dart file that keeps username
 import 'package:gevmini/api.dart'; // Import ApiService
+import 'dart:async';
 
 class ChatBotPage extends StatefulWidget {
   const ChatBotPage({Key? key}) : super(key: key);
+
+  // Statik cache sistemi
+  static List<ChatBubble>? _cachedMessages;
+  static Timer? _cacheTimer;
 
   @override
   _ChatBotPageState createState() => _ChatBotPageState();
@@ -13,14 +18,59 @@ class ChatBotPage extends StatefulWidget {
 class _ChatBotPageState extends State<ChatBotPage> {
   final TextEditingController _messageController = TextEditingController();
   final ApiService apiService = ApiService(); // Initialize ApiService
+  final ScrollController _scrollController =
+      ScrollController(); // Add ScrollController
 
   // Chat messages list
   List<ChatBubble> messages = [];
 
   @override
+  void initState() {
+    super.initState();
+    _initializeChat(); // Otomatik sohbet başlatma
+  }
+
+  @override
   void dispose() {
     _messageController.dispose();
+    _scrollController.dispose(); // Dispose the ScrollController
+
+    // Mevcut zamanlayıcıyı iptal et
+    ChatBotPage._cacheTimer?.cancel();
+
+    // Mesajları cache'e kaydet ve zamanlayıcıyı başlat
+    ChatBotPage._cachedMessages = messages;
+    ChatBotPage._cacheTimer = Timer(Duration(seconds: 7), () {
+      ChatBotPage._cachedMessages = null;
+      print('Sohbet geçmişi temizlendi');
+    });
+
     super.dispose();
+  }
+
+  // Function to initialize chat with cached messages or welcome message
+  void _initializeChat() {
+    // Cache'de mesaj varsa onu kullan
+    if (ChatBotPage._cachedMessages != null) {
+      setState(() {
+        messages = ChatBotPage._cachedMessages!;
+      });
+      _scrollToBottom();
+    } else {
+      // Cache boşsa hoş geldin mesajını ekle
+      _addWelcomeMessage();
+    }
+  }
+
+  void _addWelcomeMessage() {
+    setState(() {
+      messages.add(ChatBubble(
+        text: 'Merhaba! Ben GeVmini, senin kişisel eğitim asistanınım. '
+            'Hangi konuda yardımcı olabilirim? 🎓',
+        isUserMessage: false,
+      ));
+    });
+    _scrollToBottom(); // Scroll to bottom after adding welcome message
   }
 
   // Function to add user message and get guide response
@@ -35,9 +85,13 @@ class _ChatBotPageState extends State<ChatBotPage> {
       // Clear the message input
       _messageController.clear();
 
+      // Scroll to bottom after adding user message
+      _scrollToBottom();
+
       // Get guide response from ApiService
       try {
-        final guideResponse = await apiService.guide(subject); // Pass empty string for feel
+        final guideResponse =
+            await apiService.guide(subject); // Pass empty string for feel
         setState(() {
           messages.add(ChatBubble(
             text: guideResponse ?? 'Üzgünüm, bu konuda yardımcı olamıyorum.',
@@ -52,14 +106,30 @@ class _ChatBotPageState extends State<ChatBotPage> {
           ));
         });
       }
+
+      // Scroll to bottom after adding bot response
+      _scrollToBottom();
     }
+  }
+
+  // Function to scroll to the bottom of the chat
+  void _scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gevmini Chat', style: TextStyle(color: Colors.white)),
+        title: Text('GeVmini Destek', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.blue,
       ),
       backgroundColor: Colors.grey[900],
@@ -69,6 +139,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
           children: [
             Expanded(
               child: ListView.builder(
+                controller: _scrollController, // Attach the ScrollController
                 itemCount: messages.length,
                 itemBuilder: (context, index) {
                   return messages[index];
@@ -106,8 +177,10 @@ class ChatBubble extends StatelessWidget {
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(12),
             topRight: Radius.circular(12),
-            bottomLeft: isUserMessage ? Radius.circular(12) : Radius.circular(0),
-            bottomRight: isUserMessage ? Radius.circular(0) : Radius.circular(12),
+            bottomLeft:
+                isUserMessage ? Radius.circular(12) : Radius.circular(0),
+            bottomRight:
+                isUserMessage ? Radius.circular(0) : Radius.circular(12),
           ),
         ),
         child: Text(
@@ -140,7 +213,7 @@ class MessageInput extends StatelessWidget {
               controller: controller,
               style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
-                hintText: 'Type a guide subject...',
+                hintText: 'Hangi konuda yardımcı olmamı istersin 💭',
                 hintStyle: TextStyle(color: Colors.white54),
                 border: InputBorder.none,
               ),

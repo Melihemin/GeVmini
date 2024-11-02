@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 class ApiService {
   final String baseUrl = 'http://127.0.0.1:5000/api';
+  // final String baseUrl = 'http://10.0.2.2:5000/api'; // Android Emulator
 
   // API'den cevap yüzdesini almak için
   Future<double?> answersPercent(
@@ -92,7 +95,7 @@ class ApiService {
       Uri.parse('$baseUrl/guide'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
-        'subject': subject, // Sadece subject parametresini gönderiyoruz
+        'subject': subject,
       }),
     );
 
@@ -100,7 +103,6 @@ class ApiService {
       final data = json.decode(response.body);
       return data['result'];
     } else {
-      // Hata ayıklama için yanıt gövdesini yazdırıyoruz
       print('Guide error: ${response.statusCode} - ${response.body}');
       throw Exception('Failed to get guidance');
     }
@@ -154,5 +156,41 @@ class ApiService {
     } else {
       throw Exception('Failed to get stored data');
     }
+  }
+
+  Future<String?> formatResponse(String response) async {
+    try {
+      String formattedResponse = response.replaceAll(r'**', '\\**');
+      return formattedResponse;
+    } catch (e) {
+      print('Format hatası: $e');
+      return response;
+    }
+  }
+
+  // Metni gösterirken Markdown widget'ını kullan
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('AI Yanıtı')),
+      body: FutureBuilder<String?>(
+        future: ApiService().guide('your-subject-here'),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Bir hata oluştu: ${snapshot.error}'));
+          } else {
+            return Markdown(
+              data: snapshot.data ?? 'Veri bulunamadı',
+              styleSheet: MarkdownStyleSheet(
+                h1: TextStyle(fontWeight: FontWeight.bold),
+                h2: TextStyle(fontWeight: FontWeight.bold),
+                p: TextStyle(fontSize: 16),
+              ),
+            );
+          }
+        },
+      ),
+    );
   }
 }

@@ -25,77 +25,78 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
   }
 
   Future<void> _calculateResult() async {
-  // Validate input
-  if (_textController1.text.trim().isEmpty || _textController2.text.trim().isEmpty || _selectedDifficulty == null) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Lütfen tüm alanları doldurun')),
-    );
-    return;
-  }
-
-  setState(() {
-    result = 'Yükleniyor...'; // Show loading indicator
-    isExplanationVisible = true;
-  });
-
-  try {
-    // Call the findAnswer method from ApiService
-    final apiResult = await apiService.findAnswer(
-      '${_textController1.text.trim()} - ${_textController2.text.trim()}',
-      _selectedDifficulty!,
-    );
+    // Validate input
+    if (_textController1.text.trim().isEmpty ||
+        _textController2.text.trim().isEmpty ||
+        _selectedDifficulty == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Lütfen tüm alanları doldurun')),
+      );
+      return;
+    }
 
     setState(() {
-      result = apiResult ?? 'Bir cevap bulunamadı';
+      result = 'Yükleniyor...'; // Show loading indicator
+      isExplanationVisible = true;
     });
 
-    // Show the result in a scrollable popup dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Sonuç"),
-          content: SingleChildScrollView(
-            child: Text(result),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text("Tamam"),
-            ),
-          ],
-        );
-      },
-    );
-  } catch (e) {
-    setState(() {
-      result = 'Bir hata oluştu: $e';
-    });
+    try {
+      // Call the findAnswer method from ApiService
+      final apiResult = await apiService.findAnswer(
+        '${_textController1.text.trim()} - ${_textController2.text.trim()}',
+        _selectedDifficulty!,
+      );
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Hata"),
-          content: SingleChildScrollView(
-            child: Text(result),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text("Tamam"),
+      setState(() {
+        result = apiResult ?? 'Bir cevap bulunamadı';
+      });
+
+      // Show the result in a scrollable popup dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Sonuç"),
+            content: SingleChildScrollView(
+              child: Text(result),
             ),
-          ],
-        );
-      },
-    );
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("Tamam"),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (e) {
+      setState(() {
+        result = 'Bir hata oluştu: $e';
+      });
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Hata"),
+            content: SingleChildScrollView(
+              child: Text(result),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("Tamam"),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -214,7 +215,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                 ),
               ),
             ),
-            SizedBox(height : 40),
+            SizedBox(height: 40),
             // Submit Button
             OutlinedButton(
               style: OutlinedButton.styleFrom(

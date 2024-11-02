@@ -32,7 +32,6 @@ class _MainMenuPageState extends State<MainMenuPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -43,6 +42,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profil',
+            tooltip: 'Profil',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.create),
@@ -52,15 +52,21 @@ class _MainMenuPageState extends State<MainMenuPage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.question_answer),
             label: 'Soru Sor',
+            tooltip: 'Soru Sor',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.book),
-            label : 'Konu Anlatımı',
-            ),
-          BottomNavigationBarItem(
-            icon: Image(image: AssetImage('assets/images/gevrek.png'), fit: BoxFit.cover, width: 30, height: 30),
-            label: 'geVmini',
+            label: 'Konu Anlatımı',
+            tooltip: 'Konu Anlatımı',
           ),
+          BottomNavigationBarItem(
+              icon: Image(
+                  image: AssetImage('assets/images/gevrek.png'),
+                  fit: BoxFit.cover,
+                  width: 30,
+                  height: 30),
+              label: 'geVmini',
+              tooltip: 'GeVmini Destek'),
         ],
       ),
     );

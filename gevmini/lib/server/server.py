@@ -5,7 +5,7 @@ import google.generativeai as genai
 
 app = Flask(__name__)
 CORS(app)  # CORS'u etkinleştir
-gevmini = Gevmini("AIzaSyBRYEe1kSaynYPSE8E11rzmCOvmOVdgg8U", "gemini-1.5-flash-latest")
+gevmini = Gevmini("AIzaSyBNsGKkW6f52QjZeCPw8r0SxCqCQHNR3uc", "gemini-1.5-flash-latest")
 
 # Global veri saklama alanı
 data_storage = {}

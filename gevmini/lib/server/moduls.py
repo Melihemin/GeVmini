@@ -29,6 +29,8 @@ class Gevmini:
     def normalize_answer(self, text, lang):
         """
         Kullanıcının cevabını normalize eder. Türkçe karakterleri ve özel karakterleri temizler.
+        Verilen cevaplarda başlıkları kalınlaştırmadan verir.
+        Başlıkları kalınlaştırmak için verdiği '**' karakterlerini çıktıda temizler. 
 
         :param text: Normalleştirilecek metin.
         :param lang: Metnin dili (şu an yalnızca 'tr' veya 'TR' desteklenmektedir).
@@ -60,7 +62,9 @@ class Gevmini:
 
     def create_quiz(self, subject, question_count, level):
         """
-        Belirtilen konu ve zorluk seviyesine göre KPSS tarzı sorular oluşturur.
+        Belirtilen konu ve zorluk seviyesine göre istenilen alan tarzında sorular oluşturur.
+        Verilen cevaplarda başlıkları kalınlaştırmadan verir.
+        Başlıkları kalınlaştırmak için verdiği '**' ve '#' karakterlerini çıktıda temizler. 
 
         :param subject: Soruların oluşturulacağı konu.
         :param question_count: Oluşturulacak soru sayısı.
@@ -74,11 +78,13 @@ class Gevmini:
             f"Zorluk Seviyesi: {level}\n\n"
             "Bu kriterlere göre sorular oluşturun."
         )
-        return response.text
+        return self.clean_response(response.text)
 
     def create_question(self, subject, level):
         """
         Belirtilen konu ve zorluk seviyesine göre KPSS tarzı bir soru oluşturur.
+        Cevabı başlıkları kalınlaştırmadan verir.
+        Başlıkları kalınlaştırmak için verdiği '**' ve '#' karakterlerini çıktıda temizler. 
 
         :param subject: Sorunun oluşturulacağı konu.
         :param level: Sorunun zorluk seviyesi.
@@ -89,11 +95,13 @@ class Gevmini:
             f"Konu: {subject}\nZorluk Seviyesi: {level}\n\n"
             "Bu konu ve seviyeye uygun bir soru oluştur."
         )
-        return response.text
+        return self.clean_response(response.text)
 
     def lecture(self, subject, title, level, token):
         """
         Belirtilen konu hakkında detaylı bir ders anlatımı yapar.
+        Cevabı başlıkları kalınlaştırmadan verir.
+        Başlıkları kalınlaştırmak için verdiği '**' ve '#' karakterlerini çıktıda temizler. 
 
         :param subject: Dersin ait olduğu alan.
         :param title: Anlatılacak konunun başlığı.
@@ -106,7 +114,7 @@ class Gevmini:
             f"Konu: {subject}\nBaşlık: {title}\nZorluk Seviyesi: {level}\nKarakter Limiti: {token}\n\n"
             "Bu kriterlere göre ders anlatımı yap."
         )
-        return response.text
+        return self.clean_response(response.text)
 
     def find_answer(self, question, level):
         """
@@ -120,7 +128,7 @@ class Gevmini:
         response = chat.send_message(
             f"{level.capitalize()} bir cevap ver: Soru: '{question}' için {level} seviyesinde bir açıklama yap."
         )
-        return response.text
+        return self.clean_response(response.text)
 
     def guide(self, subject):
         """
@@ -134,4 +142,15 @@ class Gevmini:
             f"Konu: {subject}\n"
             "Sen bir öğrenci destek chatbotusun. Amacın, öğrencilerin sorularını yanıtlamak, onlara rehberlik yapmak ve gerektiğinde dostça bir şekilde sohbet ederek motivasyon sağlamaktır."
         )
-        return response.text
+        return self.clean_response(response.text)
+
+    def clean_response(self, response_text):
+        """
+        AI'dan alınan yanıt metnindeki kalın karakterleri temizler.
+
+        :param response_text: AI tarafından üretilen yanıt metni.
+        :return: Temizlenmiş yanıt metni.
+        """
+        # ** ve # karakterlerini temizle
+        cleaned_text = re.sub(r'\*\*|\#', '', response_text)
+        return cleaned_text.strip()
