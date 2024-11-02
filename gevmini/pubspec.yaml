@@ -30,7 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^1.0.0
+  http: ^0.13.3
 
 
 
@@ -72,6 +72,7 @@ flutter:
         - asset: assets/fonts/PlayfairDisplay-Bold.ttf
     
   assets:
+    - assets/images/pp.jpg
     - assets/images/gevrek.png
 
   # To add assets to your application, add an assets section, like this:

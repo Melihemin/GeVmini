@@ -23,47 +23,6 @@ class ApiService {
     }
   }
 
-  // Soru oluşturma
-  Future<String?> createQuiz(String subject, int questionCount, String level) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/create_quiz'),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'subject': subject,
-        'question_count': questionCount,
-        'level': level,
-      }),
-    );
-
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      return data['result'];
-    } else {
-      throw Exception('Failed to create quiz');
-    }
-  }
-
-  // Ders bilgisi alma
-  Future<String?> lecture(String subject, String title, String level, String token) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/lecture'),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'subject': subject,
-        'title': title,
-        'level': level,
-        'token': token,
-      }),
-    );
-
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      return data['result'];
-    } else {
-      throw Exception('Failed to get lecture');
-    }
-  }
-
   // Cevap bulma
   Future<String?> findAnswer(String question, String level) async {
     final response = await http.post(
@@ -83,7 +42,48 @@ class ApiService {
     }
   }
 
-  // Rehberlik alma
+  // Quiz oluşturma
+  Future<String?> createQuiz(String subject, int questionCount, String level) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/create_quiz'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({
+        'subject': subject,
+        'question_count': questionCount,
+        'level': level,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return data['result'];
+    } else {
+      throw Exception('Failed to create quiz');
+    }
+  }
+
+  // Ders oluşturma
+  Future<String?> lecture(String subject, String title, String level, String token) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/lecture'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({
+        'subject': subject,
+        'title': title,
+        'level': level,
+        'token': token,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return data['result'];
+    } else {
+      throw Exception('Failed to create lecture');
+    }
+  }
+
+  // Rehberlik sağlama
   Future<String?> guide(String subject, String feel) async {
     final response = await http.post(
       Uri.parse('$baseUrl/guide'),
@@ -98,7 +98,7 @@ class ApiService {
       final data = json.decode(response.body);
       return data['result'];
     } else {
-      throw Exception('Failed to get guide');
+      throw Exception('Failed to get guidance');
     }
   }
 
@@ -121,7 +121,7 @@ class ApiService {
     }
   }
 
-  // Verileri alma
+  // Veri alma ve saklama
   Future<Map<String, dynamic>?> receiveData(Map<String, dynamic> data) async {
     final response = await http.post(
       Uri.parse('$baseUrl/data'),
@@ -130,20 +130,25 @@ class ApiService {
     );
 
     if (response.statusCode == 201) {
-      return json.decode(response.body);
+      final responseData = json.decode(response.body);
+      return responseData;
     } else {
       throw Exception('Failed to receive data');
     }
   }
 
-  // Verileri gönderme
-  Future<Map<String, dynamic>?> sendData() async {
-    final response = await http.get(Uri.parse('$baseUrl/data'));
+  // Saklanan veriyi alma
+  Future<Map<String, dynamic>?> getData() async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/data'),
+      headers: {'Content-Type': 'application/json'},
+    );
 
     if (response.statusCode == 200) {
-      return json.decode(response.body);
+      final data = json.decode(response.body);
+      return data;
     } else {
-      throw Exception('Failed to send data');
+      throw Exception('Failed to get stored data');
     }
   }
 }

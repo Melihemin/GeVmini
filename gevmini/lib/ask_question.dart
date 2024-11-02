@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:native_dialog_plus/native_dialog_plus.dart';
-import 'global.dart'; //dart file it keeps username
-
+import 'package:gevmini/api.dart'; // Import the ApiService class
+import 'global.dart'; // Dart file that keeps username
 
 class AskQuestionPage extends StatefulWidget {
-
-const AskQuestionPage({Key? key}) : super(key: key);
+  const AskQuestionPage({Key? key}) : super(key: key);
 
   @override
   _AskQuestionPageState createState() => _AskQuestionPageState();
@@ -13,22 +11,48 @@ const AskQuestionPage({Key? key}) : super(key: key);
 
 class _AskQuestionPageState extends State<AskQuestionPage> {
   bool isExplanationVisible = false;
-  bool showAdditionalButtons = false;
-  final TextEditingController _textController1 = TextEditingController(); // First textController
+  final TextEditingController _textController1 = TextEditingController();
+  final TextEditingController _textController2 = TextEditingController();
   String result = ''; // Result text
-  String? _selectedDifficulty; // Değişkeni tanımladık
-  
+  String? _selectedDifficulty; // For difficulty level
+  final ApiService apiService = ApiService(); // Initialize ApiService
+
   @override
   void dispose() {
     _textController1.dispose();
+    _textController2.dispose();
     super.dispose();
   }
 
-  void _calculateResult() {
+  Future<void> _calculateResult() async {
+    // Validate input
+    if (_textController1.text.trim().isEmpty || _textController2.text.trim().isEmpty || _selectedDifficulty == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Lütfen tüm alanları doldurun')),
+      );
+      return;
+    }
+
     setState(() {
-      // Combining input from two text fields as an example result
-      //result = 'Birinci Girdi: ${_textController1.text}\nİkinci Girdi: ${_textController2.text}';
+      result = 'Yükleniyor...'; // Show loading indicator
+      isExplanationVisible = true;
     });
+
+    try {
+      // Call the findAnswer method from ApiService
+      final apiResult = await apiService.findAnswer(
+        '${_textController1.text.trim()} - ${_textController2.text.trim()}',
+        _selectedDifficulty!,
+      );
+
+      setState(() {
+        result = apiResult ?? 'Bir cevap bulunamadı';
+      });
+    } catch (e) {
+      setState(() {
+        result = 'Bir hata oluştu: $e';
+      });
+    }
   }
 
   @override
@@ -75,7 +99,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
             ),
             SizedBox(height: 20),
 
-            // First TextField
+            // First TextField for Question Context
             Container(
               margin: EdgeInsets.symmetric(vertical: 10),
               padding: EdgeInsets.symmetric(horizontal: 16),
@@ -88,14 +112,34 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                 controller: _textController1,
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
-                  hintText: 'Sorunuzu Girin...',
+                  hintText: 'Hangi alan için soruyu soruyorsunuz?',
                   hintStyle: TextStyle(color: Colors.grey),
                   border: InputBorder.none,
                 ),
               ),
             ),
 
-            // Second TextField
+            // Second TextField for Topic
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Color(0xFFFFFCF2)),
+              ),
+              child: TextField(
+                controller: _textController2,
+                style: TextStyle(color: Colors.black),
+                decoration: InputDecoration(
+                  hintText: 'Hangi konu başlığında soru sormak istiyorsunuz?',
+                  hintStyle: TextStyle(color: Colors.grey),
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+
+            // Difficulty Level Dropdown
             Container(
               margin: EdgeInsets.symmetric(vertical: 10),
               padding: EdgeInsets.symmetric(horizontal: 16),
@@ -106,17 +150,19 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
               ),
               child: DropdownButtonFormField<String>(
                 value: _selectedDifficulty,
-                items: ['Çırak', 'Orta Seviye', 'İleri Seviye', 'Uzman', 'Usta'].map((e) => DropdownMenuItem<String>(
-                  value: e,
-                  child: Text(e),
-                )).toList(),
+                items: ['Çırak', 'Orta Seviye', 'İleri Seviye', 'Uzman', 'Usta']
+                    .map((e) => DropdownMenuItem<String>(
+                          value: e,
+                          child: Text(e),
+                        ))
+                    .toList(),
                 onChanged: (value) {
                   setState(() {
                     _selectedDifficulty = value;
                   });
                 },
                 decoration: InputDecoration(
-                  labelText: 'Soruların zorluk seviyesi nasıl olsun ?',
+                  labelText: 'Sorunun zorluk seviyesi',
                   labelStyle: TextStyle(color: Colors.grey),
                   border: InputBorder.none,
                 ),
@@ -129,15 +175,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                 side: BorderSide(color: Color(0xFFFFFCF2)),
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               ),
-              onPressed: () {
-                if (_textController1.text.trim().isEmpty || _selectedDifficulty == null) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Lütfen her iki alanı da doldurun')),
-                  );
-                } else {
-                  _calculateResult();
-                }
-              },
+              onPressed: _calculateResult,
               child: Text(
                 'Sonucu Göster',
                 style: TextStyle(color: Colors.white),
@@ -145,21 +183,21 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
             ),
 
             // Result Display Area
-            if(isExplanationVisible)
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 20),
-              padding: EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.grey[800],
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: SingleChildScrollView(
-                child: Text(
-                  result,
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+            if (isExplanationVisible)
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 20),
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.grey[800],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: SingleChildScrollView(
+                  child: Text(
+                    result,
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
                 ),
               ),
-            ),
           ],
         ),
       ),
