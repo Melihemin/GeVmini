@@ -3,18 +3,19 @@ import 'package:native_dialog_plus/native_dialog_plus.dart';
 import 'global.dart'; //dart file it keeps username
 
 
-class AskQuestionPage extends StatefulWidget {
+class LecturePage extends StatefulWidget {
 
-const AskQuestionPage({Key? key}) : super(key: key);
+const LecturePage({Key? key}) : super(key: key);
 
   @override
-  _AskQuestionPageState createState() => _AskQuestionPageState();
+  _LecturePageState createState() => _LecturePageState();
 }
 
-class _AskQuestionPageState extends State<AskQuestionPage> {
+class _LecturePageState extends State<LecturePage> {
   bool isExplanationVisible = false;
   bool showAdditionalButtons = false;
   final TextEditingController _textController1 = TextEditingController(); // First textController
+  final TextEditingController _textController2 = TextEditingController();
   String result = ''; // Result text
   String? _selectedDifficulty; // Değişkeni tanımladık
   
@@ -88,7 +89,26 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                 controller: _textController1,
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
-                  hintText: 'Sorunuzu Girin...',
+                  hintText: 'Hangi alan için anlatım istersiniz ?',
+                  hintStyle: TextStyle(color: Colors.grey),
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Color(0xFFFFFCF2)),
+              ),
+              child: TextField(
+                controller: _textController2,
+                style: TextStyle(color: Colors.black),
+                decoration: InputDecoration(
+                  hintText: 'Hangi konu başlığını okumak istersiniz ?',
                   hintStyle: TextStyle(color: Colors.grey),
                   border: InputBorder.none,
                 ),
@@ -116,7 +136,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                   });
                 },
                 decoration: InputDecoration(
-                  labelText: 'Soruların zorluk seviyesi nasıl olsun ?',
+                  labelText: 'Konu anlatım seviyesi nasıl olsun ?',
                   labelStyle: TextStyle(color: Colors.grey),
                   border: InputBorder.none,
                 ),
@@ -130,34 +150,17 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               ),
               onPressed: () {
-                if (_textController1.text.trim().isEmpty || _selectedDifficulty == null) {
+                if (_textController1.text.trim().isEmpty || _textController2.text.trim().isEmpty || _selectedDifficulty == null) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Lütfen her iki alanı da doldurun')),
+                    SnackBar(content: Text('Lütfen tüm alanları doldurun')),
                   );
                 } else {
                   _calculateResult();
                 }
               },
               child: Text(
-                'Sonucu Göster',
+                'Konuyu Anlat',
                 style: TextStyle(color: Colors.white),
-              ),
-            ),
-
-            // Result Display Area
-            if(isExplanationVisible)
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 20),
-              padding: EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.grey[800],
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: SingleChildScrollView(
-                child: Text(
-                  result,
-                  style: TextStyle(color: Colors.white, fontSize: 16),
-                ),
               ),
             ),
           ],

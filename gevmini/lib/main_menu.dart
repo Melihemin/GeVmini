@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gevmini/ask_question.dart';
+import 'package:gevmini/lecture_page.dart';
 import 'package:gevmini/profile_page.dart';
 import 'package:gevmini/question_page.dart';
 import 'package:gevmini/chatbot_page.dart';
@@ -18,6 +19,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
     ProfilePage(),
     QuestionPage(),
     AskQuestionPage(),
+    LecturePage(),
     ChatBotPage(),
   ];
 
@@ -51,6 +53,10 @@ class _MainMenuPageState extends State<MainMenuPage> {
             icon: Icon(Icons.question_answer),
             label: 'Soru Sor',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.book),
+            label : 'Konu Anlatımı',
+            ),
           BottomNavigationBarItem(
             icon: Image(image: AssetImage('assets/images/gevrek.png'), fit: BoxFit.cover, width: 30, height: 30),
             label: 'geVmini',
