@@ -1,0 +1,7 @@
+google-generative-ai
+Flask
+Flask-Cors
+http==0.15.0
+flutter_markdown==0.6.9
+native_dialog_plus==1.0.0
+flutter==3.10.5
