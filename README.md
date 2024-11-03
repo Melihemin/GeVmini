@@ -1,5 +1,5 @@
 # GeVmini -  For Developers
-
+Proje Raporu: https://github.com/Melihemin/GeVmini/blob/main/hackathonrapor.docx
 ## Takım Üyeleri
 
 |       | Collaborators             | Roles           | Socials                                                                                         | GitHub                                                                                           |
