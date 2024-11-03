@@ -36,7 +36,7 @@ GeVmini, Google Generative AI API'sini kullanarak öğrencilerin taleplerini yan
 - **_normalize_answer:_** Kullanıcının cevabını Türkçe karakter uyumuyla normalize eder.
 - **_answers_percent:_** Kullanıcı cevabıyla doğru cevap arasındaki benzerlik oranını analiz eder ve geri bildirim sağlar.
 - **_create_quiz:_** Belirtilen konu ve zorluk seviyesine göre quiz soruları oluşturur.
-- **_create_question:_** KPSS tarzında tek bir soru oluşturur.
+- **_create_question:_** İstenilen soru tarzında tek bir soru oluşturur.
 - **_lecture:_** Seçilen konu, başlık ve seviyeye göre detaylı ders anlatımı sunar.
 - **_find_answer:_** Sorulan soruya detaylı bir yanıt verir ve kaynak önerileri sunar.
 - **_guide:_** Öğrencilere rehberlik ve moral desteği sağlayan sohbet asistanı olarak işlev görür.
