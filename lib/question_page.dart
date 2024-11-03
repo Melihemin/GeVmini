@@ -2,32 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:gevmini/api.dart'; // Import the ApiService class
 import 'global.dart'; // Dart file that keeps username
 
-class AskQuestionPage extends StatefulWidget {
-  const AskQuestionPage({Key? key}) : super(key: key);
+class QuestionPage extends StatefulWidget {
+  const QuestionPage({Key? key}) : super(key: key);
 
   @override
-  _AskQuestionPageState createState() => _AskQuestionPageState();
+  _QuestionPageState createState() => _QuestionPageState();
 }
 
-class _AskQuestionPageState extends State<AskQuestionPage> {
+class _QuestionPageState extends State<QuestionPage> {
   bool isExplanationVisible = false;
   final TextEditingController _textController1 = TextEditingController();
-  final TextEditingController _textController2 = TextEditingController();
   String result = ''; // Result text
   String? _selectedDifficulty; // For difficulty level
   final ApiService apiService = ApiService(); // Initialize ApiService
+  int? _selectedOption; // Define the variable
 
   @override
   void dispose() {
     _textController1.dispose();
-    _textController2.dispose();
     super.dispose();
   }
 
-  Future<void> _calculateResult() async {
-    // Validate input
+  Future<void> _createQuiz() async {
+    // Input validation
     if (_textController1.text.trim().isEmpty ||
-        _textController2.text.trim().isEmpty ||
+        _selectedOption == null ||
         _selectedDifficulty == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Lütfen tüm alanları doldurun')),
@@ -36,66 +35,75 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
     }
 
     setState(() {
-      result = 'Yükleniyor...'; // Show loading indicator
+      result = 'Yükleniyor...';
       isExplanationVisible = true;
     });
 
     try {
-      // Call the findAnswer method from ApiService
-      final apiResult = await apiService.findAnswer(
-        '${_textController1.text.trim()} - ${_textController2.text.trim()}',
-        _selectedDifficulty!,
-      );
+      final subject = _textController1.text.trim();
+      final questionCount = _selectedOption ?? 1;
+      final level = _selectedDifficulty == 'Çırak'
+          ? 1
+          : _selectedDifficulty == 'Orta Seviye'
+              ? 2
+              : _selectedDifficulty == 'İleri Seviye'
+                  ? 3
+                  : _selectedDifficulty == 'Uzman'
+                      ? 4
+                      : 5;
+
+      // Send quiz creation request via ApiService
+      final response =
+          await apiService.createQuiz(subject, questionCount, level);
 
       setState(() {
-        result = apiResult ?? 'Bir cevap bulunamadı';
+        result = response != null && response.isNotEmpty
+            ? 'Quiz başarıyla oluşturuldu: $response'
+            : 'Quiz oluşturulamadı, lütfen tekrar deneyin.';
       });
 
-      // Show the result in a scrollable popup dialog
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text("Sonuç"),
-            content: SingleChildScrollView(
-              child: Text(result),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text("Tamam"),
-              ),
-            ],
-          );
-        },
-      );
+      // Display result in a popup
+      _showResultPopup(result);
     } catch (e) {
       setState(() {
         result = 'Bir hata oluştu: $e';
       });
-
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text("Hata"),
-            content: SingleChildScrollView(
-              child: Text(result),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text("Tamam"),
-              ),
-            ],
-          );
-        },
-      );
+      _showResultPopup(result);
     }
+  }
+
+  void _showResultPopup(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white, // Set background color to white
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          contentPadding: EdgeInsets.all(16),
+          content: SingleChildScrollView(
+            child: Text(
+              message,
+              style: TextStyle(
+                  color: Colors.black, fontSize: 16), // Set text color to black
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'Kapat',
+                style: TextStyle(
+                    color: Colors.black), // Set button text color to black
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -117,7 +125,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                 alignment: Alignment.center,
                 children: [
                   Text(
-                    'geVmini',
+                    'GeVmini',
                     style: TextStyle(
                       fontSize: 36,
                       fontWeight: FontWeight.bold,
@@ -129,7 +137,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                     ),
                   ),
                   Text(
-                    'geVmini',
+                    'GeVmini',
                     style: TextStyle(
                       fontSize: 36,
                       fontWeight: FontWeight.bold,
@@ -156,7 +164,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                 controller: _textController1,
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
-                  hintText: 'Hangi alan için soruyu soruyorsunuz?',
+                  hintText: 'Soru oluşturmak istediğiniz alan ve konu nedir?',
                   hintStyle: TextStyle(color: Colors.grey),
                   border: InputBorder.none,
                 ),
@@ -166,7 +174,6 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
             // Second TextField for Topic
             Container(
               width: MediaQuery.of(context).size.width * 0.8,
-              height: 200,
               margin: EdgeInsets.symmetric(vertical: 10),
               padding: EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
@@ -174,11 +181,23 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: Color(0xFFFFFCF2)),
               ),
-              child: TextField(
-                controller: _textController2,
-                style: TextStyle(color: Colors.black),
+              child: DropdownButtonFormField<int>(
+                value: 1,
+                items: [1, 2, 3, 4, 5]
+                    .map((int value) => DropdownMenuItem<int>(
+                          value: value,
+                          child: Text(value.toString()),
+                        ))
+                    .toList(),
+                onChanged: (int? newValue) {
+                  setState(() {
+                    if (newValue != null) {
+                      _selectedOption = newValue;
+                    }
+                  });
+                },
                 decoration: InputDecoration(
-                  hintText: 'Sormak istediğiniz soru nedir?',
+                  hintText: '1 ile 5 arasında bir değer seçin',
                   hintStyle: TextStyle(color: Colors.grey),
                   border: InputBorder.none,
                 ),
@@ -222,9 +241,9 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                 side: BorderSide(color: Color(0xFFFFFCF2)),
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               ),
-              onPressed: _calculateResult,
+              onPressed: _createQuiz,
               child: Text(
-                'Sonucu Göster',
+                'Soru Oluştur',
                 style: TextStyle(color: Colors.white),
               ),
             ),

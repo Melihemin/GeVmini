@@ -65,7 +65,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
                   fit: BoxFit.cover,
                   width: 30,
                   height: 30),
-              label: 'geVmini',
+              label: 'GeVmini',
               tooltip: 'GeVmini Destek'),
         ],
       ),

@@ -129,8 +129,30 @@ class _ChatBotPageState extends State<ChatBotPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('GeVmini Destek', style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.blue,
+        title: RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: 'GeVmini',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontFamily: 'JetBrainsMono', 
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              TextSpan(
+                text: 'Destek',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
+              ),
+            ],
+          ),
+        ),
+        backgroundColor: Color(0xFF3A6EA5),
+        automaticallyImplyLeading: false,
       ),
       backgroundColor: Colors.grey[900],
       body: Padding(

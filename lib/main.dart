@@ -51,16 +51,32 @@ class _MainPageState extends State<MainPage> {
                   color: const Color(0xFF3A6EA5),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Text(
-                  'geVmini',
-                  style: TextStyle(
-                    fontSize: 36,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'JetBrainsMono',
-                    color: Colors.white,
+                child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Text(
+                    'GeVmini',
+                    style: TextStyle(
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'JetBrainsMono',
+                      foreground: Paint()
+                        ..style = PaintingStyle.stroke
+                        ..strokeWidth = 2
+                        ..color = Colors.black,
+                    ),
                   ),
-                  textAlign: TextAlign.center,
-                ),
+                  Text(
+                    'GeVmini',
+                    style: TextStyle(
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'JetBrainsMono',
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
               ),
               SizedBox(height: 50),
               Container(
@@ -98,11 +114,12 @@ class _MainPageState extends State<MainPage> {
                 onPressed: () {
                   if (_textController.text.trim().isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Lütfen isminizi girin')),
+                    SnackBar(content: Text('Lütfen isminizi girin')),
                     );
                   } else {
                     userName = _textController.text.trim();
                     Navigator.pushNamed(context, '/mainMenu'); // MainMenuPage'e yönlendirme
+                    _textController.clear(); // TextField içindeki metni temizleme
                   }
                 },
                 child: Text(

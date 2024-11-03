@@ -91,7 +91,7 @@ class _LecturePageState extends State<LecturePage> {
                 alignment: Alignment.center,
                 children: [
                   Text(
-                    'geVmini',
+                    'GeVmini',
                     style: TextStyle(
                       fontSize: 36,
                       fontWeight: FontWeight.bold,
@@ -103,7 +103,7 @@ class _LecturePageState extends State<LecturePage> {
                     ),
                   ),
                   Text(
-                    'geVmini',
+                    'GeVmini',
                     style: TextStyle(
                       fontSize: 36,
                       fontWeight: FontWeight.bold,

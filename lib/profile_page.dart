@@ -14,7 +14,8 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Profil', style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.blue,
+        backgroundColor: Color(0xFF3A6EA5),
+        automaticallyImplyLeading: false,
       ),
       backgroundColor: Colors.grey[900],
       body: Center(
@@ -30,7 +31,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),*/
               CircleAvatar(
                 radius: 50,
-                backgroundColor: Colors.blue[800], // Arka plan rengi
+                backgroundColor: Color(0xFF3A6EA5), // Arka plan rengi
                 child: Icon(
                   Icons.person, // Profil ikonu
                   size: 60, // İkon boyutu
@@ -65,7 +66,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 },
                 child: Text('Kullanım Rehberini Keşfet 🔍'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue, // Button color
+                  backgroundColor: Color(0xFF3A6EA5), // Button color
                   foregroundColor: Colors.white, // Text color
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                   shape: RoundedRectangleBorder(
