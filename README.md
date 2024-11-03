@@ -2,11 +2,14 @@
 
 ## Takım Üyeleri
 
-|       | Collaborators              | Roles         |    Socials    |    GitHub    |
-|-------|------------------------|----------------|---------------|---------------|
-| ![image](https://github.com/Melihemin/GeVmini/assets/profile_image/inanc-colak.jpg?raw=true) | İnanç ÇOLAK       | AI Developer     | [![LinkedIn](https://github.com/Melihemin/GeVmini/assets/profile_image/linkedin.png?raw=true)](https://www.linkedin.com/in/colak-inanc12/) | [![GitHub](https://github.com/Melihemin/GeVmini/assets/profile_image/github.png?raw=true)](https://github.com/colak-inanc) |
-| ![image](https://github.com/Melihemin/GeVmini/assets/profile_image/melih.png?raw=true) | Melih Emin KILIÇOĞLU| AI Developer      | [![LinkedIn](https://github.com/Melihemin/GeVmini/assets/profile_image/linkedin.png?raw=true)](https://www.linkedin.com/in/melihemin/) | [![GitHub](https://github.com/Melihemin/GeVmini/assets/profile_image/github.png?raw=true)](https://github.com/Melihemin) |
-| ![image](https://github.com/Melihemin/GeVmini/assets/profile_image/cagatay-ozbek.jpg?raw=true) | Yasin Çağatay ÖZBEK    | Mobile Developer         | [![LinkedIn](https://github.com/Melihemin/GeVmini/assets/profile_image/linkedin.png?raw=true)](https://www.linkedin.com/in/yasin-çağatay-özbek/) | [![GitHub](https://github.com/Melihemin/GeVmini/assets/profile_image/github.png?raw=true)](https://github.com/Cagatay5858) |
+|       | Collaborators             | Roles           | Socials                                                                                         | GitHub                                                                                           |
+|-------|----------------------------|------------------|------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
+| <img src="https://raw.githubusercontent.com/Melihemin/GeVmini/main/assets/profile_image/inanc-colak.jpg" width="100" height="120"> | İnanç ÇOLAK         | AI Developer    | [<img src="https://raw.githubusercontent.com/Melihemin/GeVmini/main/assets/profile_image/linkedin.png" width="100" height="100">](https://www.linkedin.com/in/colak-inanc12/) | [<img src="https://raw.githubusercontent.com/Melihemin/GeVmini/main/assets/profile_image/github.png" width="100" height="100">](https://github.com/colak-inanc) |
+| <img src="https://raw.githubusercontent.com/Melihemin/GeVmini/main/assets/profile_image/melih.jpg" width="100" height="120"> | Melih Emin KILIÇOĞLU | AI Developer    | [<img src="https://raw.githubusercontent.com/Melihemin/GeVmini/main/assets/profile_image/linkedin.png" width="100" height="100">](https://www.linkedin.com/in/melihemin/) | [<img src="https://raw.githubusercontent.com/Melihemin/GeVmini/main/assets/profile_image/github.png" width="100" height="100">](https://github.com/Melihemin) |
+| <img src="https://raw.githubusercontent.com/Melihemin/GeVmini/main/assets/profile_image/cagatay-ozbek.jpg" width="100" height="120"> | Yasin Çağatay ÖZBEK  | Mobile Developer | [<img src="https://raw.githubusercontent.com/Melihemin/GeVmini/main/assets/profile_image/linkedin.png" width="100" height="100">](https://www.linkedin.com/in/yasin-çağatay-özbek/) | [<img src="https://raw.githubusercontent.com/Melihemin/GeVmini/main/assets/profile_image/github.png" width="100" height="100">](https://github.com/Cagatay5858) |
+
+
+
 
 
 ## Uygulama İsmi
@@ -70,9 +73,17 @@ GeVmini, öğrencilerin akademik gelişimlerine katkıda bulunmayı amaçlar. Uy
 
 ## 📸 Proje Görselleri 
 
-| ![img-1](https://github.com/Melihemin/GeVmini/assets/application_image/1.png?raw=true)  | ![img-2](https://github.com/Melihemin/GeVmini/assets/application_image/2.png?raw=true)  | ![img-3](https://github.com/Melihemin/GeVmini/assets/application_image/3.png?raw=true)  | ![img-4](https://github.com/Melihemin/GeVmini/assets/application_image/4.png?raw=true) |
+ ![img-1](https://github.com/user-attachments/assets/67d73f8d-a9d1-4a05-94fb-aa4726700feb)
+   ![img-2](https://github.com/user-attachments/assets/ec3d8291-d156-4006-b7ed-c225091a369a)
+   ![img-3](https://github.com/user-attachments/assets/b64adcf9-2500-4918-99c9-477acb439672)
+   ![img-4](https://github.com/user-attachments/assets/3c68882f-7eee-4945-9fe7-dc66225ab929)
 
-| ![img-5](https://github.com/Melihemin/GeVmini/assets/application_image/5.png?raw=true)  | ![img-6](https://github.com/Melihemin/GeVmini/assets/application_image/6.png?raw=true)   | ![img-7](https://github.com/Melihemin/GeVmini/assets/application_image/7.png?raw=true)  | ![img-8](https://github.com/Melihemin/GeVmini/assets/application_image/8.png?raw=true) |
+
+ ![img-5](https://github.com/user-attachments/assets/5d9e036d-108c-4405-a8a4-e3eefe7e8d25)
+  ![img-6](https://github.com/user-attachments/assets/6eddf804-cbaf-4d44-9fb7-2ab1adba44c8)
+   ![img-7](https://github.com/user-attachments/assets/567e0dd1-8dc4-468b-85d6-cb5915d0a0b9)
+  ![img-8](https://github.com/user-attachments/assets/68d679be-1e47-4bdc-83af-eede16a8e7b9)
+ 
 
 
 ## 🔗 Referanslar
