@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gevmini/global.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -9,6 +10,17 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final String guideUrl = 'https://github.com/Melihemin/GeVmini';
+
+  void _launchGuideURL() async {
+    if (await canLaunch(guideUrl)) {
+      await launch(guideUrl);
+    } else {
+      throw 'Could not launch $guideUrl';
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,9 +73,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               SizedBox(height: 30),
               ElevatedButton(
-                onPressed: () {
-                  // Action for exploring guides
-                },
+                onPressed: _launchGuideURL,
                 child: Text('Kullanım Rehberini Keşfet 🔍'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF3A6EA5), // Button color

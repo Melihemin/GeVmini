@@ -32,6 +32,7 @@ dependencies:
     sdk: flutter
   http: ^1.1.0  # En son sürümü kullanabilirsiniz
   flutter_markdown: ^0.6.18
+  url_launcher: ^6.0.20
 
 
 
