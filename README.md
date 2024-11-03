@@ -4,9 +4,9 @@
 
 |       | Collaborators              | Roles         |    Socials    |    GitHub    |
 |-------|------------------------|----------------|---------------|---------------|
-| ![image](./assets/profile_image/inanc-colak) | İnanç ÇOLAK       | AI Developer     | [![LinkedIn](./assets/profile_image/linkedin)](https://www.linkedin.com/in/colak-inanc12/) | [![GitHub](./assets/profile_image/github)](https://github.com/colak-inanc) |
-| ![image](./assets/profile_image/melih.png) | Melih Emin KILIÇOĞLU| AI Developer      | [![LinkedIn](./assets/profile_image/linkedin)](https://www.linkedin.com/in/melihemin/) | [![GitHub](./assets/profile_image/github)](https://github.com/Melihemin) |
-| ![image]([./assets/profile_image/cagatay-ozbek.png](https://github.com/Melihemin/GeVmini/blob/develop/assets/profile_image/cagatay-ozbek.jpg)) | Yasin Çağatay ÖZBEK    | Mobile Developer         | [![LinkedIn](./assets/profile_image/linkedin)](https://www.linkedin.com/in/yasin-çağatay-özbek/) | [![GitHub](./assets/profile_image/github)](https://github.com/Cagatay5858) |
+| ![image](https://github.com/Melihemin/GeVmini/assets/profile_image/inanc-colak.jpg?raw=true) | İnanç ÇOLAK       | AI Developer     | [![LinkedIn](https://github.com/Melihemin/GeVmini/assets/profile_image/linkedin.png?raw=true)](https://www.linkedin.com/in/colak-inanc12/) | [![GitHub](https://github.com/Melihemin/GeVmini/assets/profile_image/github.png?raw=true)](https://github.com/colak-inanc) |
+| ![image](https://github.com/Melihemin/GeVmini/assets/profile_image/melih.png?raw=true) | Melih Emin KILIÇOĞLU| AI Developer      | [![LinkedIn](https://github.com/Melihemin/GeVmini/assets/profile_image/linkedin.png?raw=true)](https://www.linkedin.com/in/melihemin/) | [![GitHub](https://github.com/Melihemin/GeVmini/assets/profile_image/github.png?raw=true)](https://github.com/Melihemin) |
+| ![image](https://github.com/Melihemin/GeVmini/assets/profile_image/cagatay-ozbek.jpg?raw=true) | Yasin Çağatay ÖZBEK    | Mobile Developer         | [![LinkedIn](https://github.com/Melihemin/GeVmini/assets/profile_image/linkedin.png?raw=true)](https://www.linkedin.com/in/yasin-çağatay-özbek/) | [![GitHub](https://github.com/Melihemin/GeVmini/assets/profile_image/github.png?raw=true)](https://github.com/Cagatay5858) |
 
 
 ## Uygulama İsmi
@@ -70,9 +70,9 @@ GeVmini, öğrencilerin akademik gelişimlerine katkıda bulunmayı amaçlar. Uy
 
 ## 📸 Proje Görselleri 
 
-| ![img-1](./assets/application_image/1)  | ![img-2](./assets/application_image/2")  | ![img-3](./assets/application_image/1)  | ![img-4](./assets/application_image/4) |
+| ![img-1](https://github.com/Melihemin/GeVmini/assets/application_image/1.png?raw=true)  | ![img-2](https://github.com/Melihemin/GeVmini/assets/application_image/2.png?raw=true)  | ![img-3](https://github.com/Melihemin/GeVmini/assets/application_image/3.png?raw=true)  | ![img-4](https://github.com/Melihemin/GeVmini/assets/application_image/4.png?raw=true) |
 
-| ![img-5](./assets/application_image/5)  | ![img-6](./assets/application_image/6)   | ![img-7](./assets/application_image/7)  | ![img-8](./assets/application_image/8) |
+| ![img-5](https://github.com/Melihemin/GeVmini/assets/application_image/5.png?raw=true)  | ![img-6](https://github.com/Melihemin/GeVmini/assets/application_image/6.png?raw=true)   | ![img-7](https://github.com/Melihemin/GeVmini/assets/application_image/7.png?raw=true)  | ![img-8](https://github.com/Melihemin/GeVmini/assets/application_image/8.png?raw=true) |
 
 
 ## 🔗 Referanslar
